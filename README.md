@@ -72,3 +72,4 @@ Separação dos Módulos e suas funções:
         - terminal.py           # terminal de interface (GUI) construído com tkinter.
 
     - main.py                   # main.py centraliza as chamadas na raiz do projeto.
+    - server.py                    # ativação do servidor para alimentr info.py

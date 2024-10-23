@@ -1,12 +1,11 @@
 
 import tkinter as tk
 from tkinter import ttk
-from control.controller import Control
+from control.names_control import NamesControl
 
 class Terminal:
     def __init__(self):
         self.root = tk.Tk()
-        self.selected_table = 'names_table'
 
         self.create_frames()
         self.create_widgets()
@@ -42,7 +41,7 @@ class Terminal:
         for col in self.columns:
             nomes_treeview.heading(col, text=col)
             nomes_treeview.column(col, anchor=tk.CENTER)
-            data = Control.get_full_names_table(self.selected_table)
+            data = NamesControl.get_full_names_table()
 
         for row in data:
             nomes_treeview.insert("", tk.END, values=row)
@@ -51,11 +50,11 @@ class Terminal:
     def get_name_inputs(self):
             input_name = self.entry_nome.get()
             dicionario_info = {"nome": input_name}
-            return self.selected_table, dicionario_info
+            return dicionario_info
 
     def add_recurso(self):
-        table, values = self.get_name_inputs()
-        Control.set_name_in_table(table, values)
+        values = self.get_name_inputs()
+        NamesControl.set_name_in_table(values)
         self.create_treeview()
 
     def run(self):
