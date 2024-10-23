@@ -52,7 +52,7 @@ class Terminal:
             input_name = self.entry_nome.get()
             dicionario_info = {"nome": input_name}
             return self.selected_table, dicionario_info
-    
+
     def add_recurso(self):
         table, values = self.get_name_inputs()
         Control.set_name_in_table(table, values)
