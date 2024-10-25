@@ -53,3 +53,15 @@ def perform_full_select(selected_table):
     cursor.execute(select_query)
     result = cursor.fetchall()
     return result
+
+def perform_search(search_key, selected_table, selected_column):
+    try:
+        cursor = db.cursor()
+        search_query = f'SELECT * FROM {selected_table} WHERE {selected_column} = %s'
+        cursor.execute(search_query, (search_key,))
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        print("Error:", e)
+    finally:
+        cursor.close()

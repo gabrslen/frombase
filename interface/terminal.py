@@ -21,21 +21,21 @@ class Terminal:
         self.treeview_frame.grid(row=2, column=0, columnspan=2, padx=20, pady=20)
 
     def create_widgets(self):
-        self.label_nome = ttk.Label(self.entry_frame, text="Nome:")
-        self.label_nome.grid(row=0, column=0)
-        self.entry_nome = ttk.Entry(self.entry_frame)
-        self.entry_nome.grid(row=0, column=1, padx=20)
+        self.label_name = ttk.Label(self.entry_frame, text="Name:")
+        self.label_name.grid(row=0, column=0)
+        self.entry_name = ttk.Entry(self.entry_frame)
+        self.entry_name.grid(row=0, column=1, padx=20)
 
     def create_buttons(self):
-        self.create_button = ttk.Button(self.button_frame, text="Adicionar", command=self.add_recurso)
+        self.create_button = ttk.Button(self.button_frame, text="Add Name", command=self.add_name)
         self.create_button.grid(row=0, column=0)
-        self.create_button = ttk.Button(self.button_frame, text="Buscar", command=None)
+        self.create_button = ttk.Button(self.button_frame, text="Search", command=self.search_names)
         self.create_button.grid(row=0, column=1)
 
     def create_treeview(self):
         for widget in self.treeview_frame.winfo_children():
             widget.destroy()
-        self.columns = ('id', 'Nome')
+        self.columns = ('id', 'Name')
 
         nomes_treeview = ttk.Treeview(self.treeview_frame, columns=self.columns, show="headings")
         for col in self.columns:
@@ -48,14 +48,19 @@ class Terminal:
         nomes_treeview.grid(row=0, column=0, padx=0, pady=0)
 
     def get_name_inputs(self):
-            input_name = self.entry_nome.get()
-            dicionario_info = {"nome": input_name}
+            input_name = self.entry_name.get()
+            dicionario_info = {"name": input_name}
             return dicionario_info
 
-    def add_recurso(self):
+    def add_name(self):
         values = self.get_name_inputs()
         NamesControl.set_name_in_table(values)
         self.create_treeview()
+
+    def search_names(self):
+        name_to_find = self.entry_name.get()
+        result = NamesControl.get_names_in_table(name_to_find)
+        print(result)
 
     def run(self):
         self.root.mainloop()
