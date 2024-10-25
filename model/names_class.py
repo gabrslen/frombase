@@ -6,4 +6,4 @@ class Name:
         return self.validate_name()
 
     def validate_name(self):
-        return isinstance(self.name, str) and 2 <= len(self.name)
+        return isinstance(self.name, str) and 2 < len(self.name)

@@ -9,7 +9,7 @@ table = 'names_table'
 class NamesControl:
 
     def set_name_in_table(data_to_insert):
-        new_name = Name(name=data_to_insert.get('nome'))
+        new_name = Name(name=data_to_insert.get('name'))
         if new_name.is_valid():
             db.perform_insert(table, data_to_insert)
         else:
