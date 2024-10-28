@@ -12,6 +12,7 @@ class Terminal:
             add_name_command=self.add_name,
             search_command=self.search_names
         )
+        self.search_names()
 
     def get_name_inputs(self):
         input_name = self.names_form.entry_name.get()
@@ -22,11 +23,17 @@ class Terminal:
         try:
             response = requests.post("http://localhost:5000/set_name", json=values)
             if response.status_code == 201:
-                self.names_form.create_treeview()  # Atualiza a lista de nomes na interface
+                get_response = requests.get("http://localhost:5000/get_names")
+                if get_response.status_code == 200:
+                    data = get_response.json()
+                    self.names_form.update_treeview(data)
+                else:
+                    print(f"Erro ao buscar lista de nomes: {get_response.json().get('details', 'Erro desconhecido')}")
             else:
                 print(f"Erro ao adicionar nome: {response.json().get('details', 'Erro desconhecido')}")
         except requests.exceptions.RequestException as e:
             print(f"Erro ao conectar à API: {e}")
+
 
     def search_names(self):
         name_to_find = self.names_form.entry_name.get()

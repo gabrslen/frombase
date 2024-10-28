@@ -11,7 +11,7 @@ class NamesForm:
         self.entry_frame, self.button_frame, self.treeview_frame = self.create_frames()
         self.entry_name = self.create_widgets()
         self.create_buttons()
-        self.create_treeview([])  # Inicializa a treeview vazia
+        self.create_treeview([])
 
     def create_frames(self):
         entry_frame = ttk.Frame(self.root)
