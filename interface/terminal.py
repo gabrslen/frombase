@@ -1,6 +1,8 @@
+# terminal.py
+
 import tkinter as tk
 from interface.names_form import NamesForm
-from control.names_control import NamesControl
+import requests
 
 class Terminal:
     def __init__(self):
@@ -17,13 +19,27 @@ class Terminal:
 
     def add_name(self):
         values = self.get_name_inputs()
-        NamesControl.set_name_in_table(values)
-        self.names_form.create_treeview()
+        try:
+            response = requests.post("http://localhost:5000/set_name", json=values)
+            if response.status_code == 201:
+                self.names_form.create_treeview()  # Atualiza a lista de nomes na interface
+            else:
+                print(f"Erro ao adicionar nome: {response.json().get('details', 'Erro desconhecido')}")
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao conectar à API: {e}")
 
     def search_names(self):
         name_to_find = self.names_form.entry_name.get()
-        result = NamesControl.get_names_in_table(name_to_find)
-        print(result)
+        params = {"name": name_to_find} if name_to_find else {}
+        try:
+            response = requests.get("http://localhost:5000/get_names", params=params)
+            if response.status_code == 200:
+                result = response.json()
+                self.names_form.update_treeview(result)
+            else:
+                print(f"Erro ao buscar nome: {response.json().get('details', 'Erro desconhecido')}")
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao conectar à API: {e}")
 
     def run(self):
         self.root.mainloop()

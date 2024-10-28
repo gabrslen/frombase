@@ -1,6 +1,3 @@
-
-import tkinter as tk
-from tkinter import messagebox
 import database.conn as db
 from model.names_class import Name
 
@@ -8,20 +5,19 @@ table = 'names_table'
 
 class NamesControl:
 
+    @staticmethod
     def set_name_in_table(data_to_insert):
         new_name = Name(name=data_to_insert.get('name'))
-        if new_name.is_valid():
+        valid, message = new_name.is_valid()
+        if valid:
             db.perform_insert(table, data_to_insert)
         else:
-            root = tk.Tk()
-            root.withdraw()
-            messagebox.showerror("Erro de Validação", "Dados inválidos: Verifique o nome.")
-            root.destroy()
+            raise ValueError(message)
 
+    @staticmethod
     def get_names_in_table(data_to_search):
-        names = db.perform_search(data_to_search, table, 'name')
-        return names
-    
+        return db.perform_search(data_to_search, table, 'name')
+
+    @staticmethod
     def get_full_names_table():
-        names = db.perform_full_select(table)
-        return names
+        return db.perform_full_select(table)

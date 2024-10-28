@@ -19,7 +19,7 @@
     
     .venv/Scripts/activate
 
-    - criar um arquivo .gitignore para os arquivos locais, e extensões temporárias:
+Criar um arquivo .gitignore para os arquivos locais, e extensões temporárias:
 
     .venv/
     .env
@@ -36,6 +36,7 @@ Com o ambiente preparado podemos começar a instalar as dependências que serão
     pip install mysql-connector-python
     pip install python-dotenv
     pip install Flask
+    pip install requests
 
 
 Estrutura de diretórios para desenvolver o projeto de forma escalável:
@@ -61,7 +62,7 @@ Separação dos Módulos e suas funções:
         - info.py               # módulo flask para exibir info.py na web service.
 
     - control
-        - controller.py   # controle de dados, etapa de verificações de inputs.
+        - controller.py         # controle de dados, etapa de verificações de inputs.
             
     - database
         - .env                  # contém as variáveis de acesso do banco de dados.
@@ -72,4 +73,4 @@ Separação dos Módulos e suas funções:
         - terminal.py           # terminal de interface (GUI) construído com tkinter.
 
     - main.py                   # main.py centraliza as chamadas na raiz do projeto.
-    - server.py                    # ativação do servidor para alimentr info.py
+    - server.py                 # ativação do servidor para alimentr info.py

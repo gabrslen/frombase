@@ -1,6 +1,7 @@
+# names_form.py
+
 import tkinter as tk
 from tkinter import ttk
-from control.names_control import NamesControl
 
 class NamesForm:
     def __init__(self, root, add_name_command, search_command):
@@ -10,7 +11,7 @@ class NamesForm:
         self.entry_frame, self.button_frame, self.treeview_frame = self.create_frames()
         self.entry_name = self.create_widgets()
         self.create_buttons()
-        self.create_treeview()
+        self.create_treeview([])  # Inicializa a treeview vazia
 
     def create_frames(self):
         entry_frame = ttk.Frame(self.root)
@@ -34,18 +35,20 @@ class NamesForm:
         search_button = ttk.Button(self.button_frame, text="Search", command=self.search_command)
         search_button.grid(row=0, column=1)
 
-    def create_treeview(self):
+    def create_treeview(self, data):
         for widget in self.treeview_frame.winfo_children():
             widget.destroy()
+
         columns = ('id', 'Name')
-
-        self.nomes_treeview = ttk.Treeview(self.treeview_frame, columns=columns, show="headings")
+        self.names_treeview = ttk.Treeview(self.treeview_frame, columns=columns, show="headings")
         for col in columns:
-            self.nomes_treeview.heading(col, text=col)
-            self.nomes_treeview.column(col, anchor=tk.CENTER)
+            self.names_treeview.heading(col, text=col)
+            self.names_treeview.column(col, anchor=tk.CENTER)
 
-        data = NamesControl.get_full_names_table()
         for row in data:
-            self.nomes_treeview.insert("", tk.END, values=row)
+            self.names_treeview.insert("", tk.END, values=row)
 
-        self.nomes_treeview.grid(row=0, column=0, padx=0, pady=0)
+        self.names_treeview.grid(row=0, column=0, padx=0, pady=0)
+
+    def update_treeview(self, data):
+        self.create_treeview(data)
