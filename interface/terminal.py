@@ -28,11 +28,11 @@ class Terminal:
                     data = get_response.json()
                     self.names_form.update_treeview(data)
                 else:
-                    print(f"Erro ao buscar lista de nomes: {get_response.json().get('details', 'Erro desconhecido')}")
+                    print(f"Error fetching Names from list: {get_response.json().get('details', 'Unknown Error!')}")
             else:
-                print(f"Erro ao adicionar nome: {response.json().get('details', 'Erro desconhecido')}")
+                print(f"Error saving Name: {response.json().get('details', 'Unknown Error!')}")
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar à API: {e}")
+            print(f"Error connecting to API: {e}")
 
 
     def search_names(self):
@@ -44,9 +44,9 @@ class Terminal:
                 result = response.json()
                 self.names_form.update_treeview(result)
             else:
-                print(f"Erro ao buscar nome: {response.json().get('details', 'Erro desconhecido')}")
+                print(f"Error fetching Name: {response.json().get('details', 'Unknown Error!')}")
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar à API: {e}")
+            print(f"Error connecting to API: {e}")
 
     def run(self):
         self.root.mainloop()
