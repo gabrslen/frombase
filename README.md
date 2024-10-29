@@ -37,6 +37,7 @@ Com o ambiente preparado podemos começar a instalar as dependências que serão
     pip install python-dotenv
     pip install Flask
     pip install requests
+    pip install flask-cors
 
 
 Estrutura de diretórios para desenvolver o projeto de forma escalável:
