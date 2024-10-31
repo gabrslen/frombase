@@ -1,5 +1,5 @@
 import database.conn as db
-from model.names_class import Name
+from model.names import Name
 
 table = 'names_table'
 
