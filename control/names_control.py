@@ -1,7 +1,7 @@
 import database.conn as db
 from model.names import Name
 
-table = 'names_table'
+table = 'names'
 
 class NamesControl:
 
