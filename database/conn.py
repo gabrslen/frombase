@@ -83,6 +83,7 @@ def perform_search(search_key, selected_table, selected_column):
     cursor = db.cursor()
     try:
         search_query = f'SELECT * FROM {selected_table} WHERE {selected_column} = %s'
+        print(search_query)
         cursor.execute(search_query, (search_key,))
         result = cursor.fetchall()
         return result

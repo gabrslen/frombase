@@ -35,7 +35,9 @@
         };
 
         function btn_login_click () {
-            alert( "Handler for click called." );
+            var login = $('#txt-login').val();
+            login_validation(login);
+            
         }
 
         function btn_save_click() {
@@ -43,6 +45,17 @@
             //var password = $('#txt-password-novo').val();
             send_new_data(user_name)
             alert('alerta 2')
+        }
+
+        function get_ajax (url, data, callback) {
+            return jQuery.ajax({
+            'type': 'GET',
+            'url': url,
+            'contentType': 'application/json',
+            'data': JSON.stringify(data),
+            'dataType': 'json',
+            'success': callback
+            });
         }
 
         function post_ajax (url, data, callback) {
@@ -55,8 +68,43 @@
             'success': callback
             });
         }
+
+        function login_validation (login) {
+            $.ajax({
+                type: "GET",
+                url: 'http://localhost:5000/login_validation',
+                data: JSON.stringify({ "login": login }),
+                contentType: 'application/json',
+                success: function(response) {
+                    try {
+                        let data = response
+                        alert('login 1')
+                    } catch (error) {
+                        console.error("Erro ao logar: ", error)
+                    }
+                },
+                error: function(response) {
+                    var resultado = (response.responseJSON.data.details)
+                    alert(resultado)
+                }
+            });
+        }
         
         function send_new_data (user_name) {
+            var url = 'http://localhost:5000/set_name'
+            var data = JSON.stringify({ "name": user_name })
+            var callbackSucesso = 
+            function(response) {
+                    try {
+                        let data = response
+                        alert('alerta 1')
+                    } catch (error) {
+                        console.error("Erro ao criar novo Username: ", error)
+                    }
+                };
+            post_ajax(url, data, callbackSucesso)
+
+            /* 
             $.ajax({
                 type: "POST",
                 url: 'http://localhost:5000/set_name',
@@ -70,7 +118,7 @@
                         console.error("Erro ao criar novo Username: ", error)
                     }
                 }
-            })
+            }) */
         }
 
     </script>
@@ -121,7 +169,7 @@
             <div class="col-md-6">
                 <div class="card px-5 py-5" id="form1">
                     <div class="form-data" v-if="!submitted">
-                        <div class="forms-inputs mb-4"> <span>Username</span> <input autocomplete="off" type="text">
+                        <div class="forms-inputs mb-4"> <span>Username</span> <input autocomplete="off" type="text" id="txt-login">
                             <div class="invalid-feedback">A valid email is required!</div>
                         </div>
                         <div class="mb-3"> <button class="btn btn-dark w-100" id ="btn-login">Login</button> </div>

@@ -5,6 +5,21 @@ from control.names_control import NamesControl
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/login_validation', methods=['GET'])
+def login_validation():
+    try:
+        retorno = ''
+        login = request.args.get('login')
+        if login:
+            login_list = NamesControl.get_names_in_table(login)
+            print(login_list)
+        else:
+            raise RuntimeError('Digite o login.')
+        return jsonify(retorno)
+    except Exception as e:
+        app.logger.error(f"Erro ao fazer login: {e}")
+        return jsonify({'data':{'error':'Erro ao logst.','details': str(e)}}), 500
+
 @app.route('/get_names', methods=['GET'])
 def get_names():
     try:
